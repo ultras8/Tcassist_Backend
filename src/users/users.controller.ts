@@ -20,7 +20,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
-import { UserRole } from './role.enum';
+import { UserRole } from '../enums/role.enum';
 import { UpdateRoleDto } from '../auth/dto/update-auth.dto';
 import { UpdateStatusDto } from './dto/update-status.dto';
 

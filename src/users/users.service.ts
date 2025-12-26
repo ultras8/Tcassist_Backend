@@ -10,7 +10,7 @@ import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdateRoleDto } from '../auth/dto/update-auth.dto';
-import { UserRole } from './role.enum';
+import { UserRole } from '../enums/role.enum';
 import { UpdateStatusDto } from './dto/update-status.dto';
 
 @Injectable()

@@ -21,6 +21,8 @@ nest g s users
 
 # Controller
 nest g co users
+
+nset g res admission
 ==================================
 
 -- run

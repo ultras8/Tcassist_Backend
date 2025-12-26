@@ -1,5 +1,3 @@
-// src/users/users.module.ts
-
 import { forwardRef, Module } from '@nestjs/common'; // 👈 เพิ่ม forwardRef ถ้ามันฟ้อง Circular
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersService } from './users.service';

@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, DeleteDateColumn } from 'typeorm';
-import { UserRole } from '../role.enum';
+import { UserRole } from '../../enums/role.enum';
 
 @Entity() // บอกว่าเป็นตารางในฐานข้อมูล
 export class User {
