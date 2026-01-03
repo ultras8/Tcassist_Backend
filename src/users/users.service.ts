@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, Not, Repository } from 'typeorm';
-import { User } from './entities/user.entity';
+import { User } from '../entities/user.entity';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -17,7 +17,7 @@ import { UpdateStatusDto } from './dto/update-status.dto';
 export class UsersService {
   constructor(
     @InjectRepository(User)
-    private usersRepository: Repository<User>, // ดึงตัวจัดการ DB เข้ามา
+    private usersRepository: Repository<User>,
   ) { }
 
   async create(dto: CreateUserDto) {
@@ -88,11 +88,11 @@ export class UsersService {
   async updateRole(id: string, updateRoleDto: UpdateRoleDto) {
     console.log('--- Updating Role for ID:', id);
     console.log('--- New Role from DTO:', updateRoleDto.role);
-    // 1. เช็คว่ามี User คนนี้ไหม
+    // เช็คว่ามี User คนนี้ไหม
     const user = await this.usersRepository.findOne({ where: { id } });
     if (!user) throw new NotFoundException('ไม่พบผู้ใช้งานคนนี้ค่ะ');
 
-    // 2. (Optional) ป้องกันไม่ให้แอดคนเป็น SuperAdmin เพิ่มผ่านทางนี้
+    // (Optional) ป้องกันไม่ให้แอดคนเป็น SuperAdmin เพิ่มผ่านทางนี้
     if (updateRoleDto.role === UserRole.SUPERADMIN) {
       throw new BadRequestException('ไม่สามารถแต่งตั้ง SuperAdmin เพิ่มได้ค่ะ');
     }
@@ -108,7 +108,7 @@ export class UsersService {
     return a;
   }
 
-  // 1. ระงับการใช้งาน (เปลี่ยนสถานะ isActive)
+  // ระงับการใช้งาน (เปลี่ยนสถานะ isActive)
   async updateStatus(id: string, updateStatusDto: UpdateStatusDto) {
     const user = await this.usersRepository.findOne({ where: { id } });
     if (!user) throw new NotFoundException('ไม่พบผู้ใช้งานค่ะ');
@@ -117,16 +117,16 @@ export class UsersService {
     return await this.usersRepository.save(user);
   }
 
-  // 2. Soft Delete (ลบแต่ข้อมูลยังอยู่ใน DB)
+  // Soft Delete (ลบแต่ข้อมูลยังอยู่ใน DB)
   async softDelete(id: string) {
     const user = await this.usersRepository.findOne({ where: { id } });
     if (!user) throw new NotFoundException('ไม่พบผู้ใช้งานค่ะ');
 
-    return await this.usersRepository.softRemove(user); // 👈 ใช้ softRemove แทน remove
+    return await this.usersRepository.softRemove(user); // ใช้ softRemove แทน remove
   }
 
   async restoreUser(id: string) {
-    // ปกติ findOne จะหาคนถูกลบไม่เจอ เราต้องใช้ withDeleted: true เพื่อให้มองเห็นคนที่ถูกลบไปแล้วค่ะ
+    // ปกติ findOne จะหาคนถูกลบไม่เจอ ใช้ withDeleted: true เพื่อให้มองเห็นคนที่ถูกลบไปแล้ว
     const user = await this.usersRepository.findOne({
       where: { id },
       withDeleted: true,

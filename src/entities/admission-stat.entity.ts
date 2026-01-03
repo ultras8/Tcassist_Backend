@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { Admission } from './admission.entity';
 
 @Entity('admission_stats')
 export class AdmissionStat {
@@ -6,10 +13,16 @@ export class AdmissionStat {
   id: number;
 
   @Column()
-  programCode: string; // ตัวเชื่อมกับตารางหลัก
+  programCode: string;
 
   @Column()
-  year: number; // 2024, 2023, 2022
+  year: number;
+
+  @Column('integer', { nullable: true })
+  total_seats: number;
+
+  @Column('integer', { nullable: true })
+  total_candidates: number;
 
   @Column('float', { nullable: true })
   minScore: number;
@@ -19,4 +32,14 @@ export class AdmissionStat {
 
   @Column('float', { nullable: true })
   avgScore: number;
+
+  @Column('float', { nullable: true })
+  round_no: number;
+
+  @Column({ nullable: true })
+  admissionId: number;
+
+  @ManyToOne(() => Admission, (admission) => admission.stats)
+  @JoinColumn({ name: 'admissionId' })
+  admission: Admission;
 }

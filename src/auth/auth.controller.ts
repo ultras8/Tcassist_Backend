@@ -9,7 +9,7 @@ export class AuthController {
   constructor(private authService: AuthService) { }
 
   @Post('login')
-  @HttpCode(HttpStatus.OK) // ปกติ Post จะได้ 201 แต่ Login เรานิยมใช้ 200
+  @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'เข้าสู่ระบบด้วย email' })
   login(@Body() loginDto: LoginDto) {
     return this.authService.login(loginDto.email, loginDto.password);

@@ -3,19 +3,22 @@ import {
   Column,
   PrimaryGeneratedColumn,
   ManyToOne,
+  OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
   JoinColumn,
+  Index,
 } from 'typeorm';
 import { University } from './university.entity';
+import { AdmissionStat } from './admission-stat.entity';
 import { ProgramType } from 'src/enums/university.enum';
 
 @Entity('admission_criteria')
+@Index(['programCode', 'year'], { unique: true })
 export class Admission {
   @PrimaryGeneratedColumn()
   id: number;
 
-  // FK
   @ManyToOne(() => University, (university) => university.admission)
   @JoinColumn({ name: 'universityId' })
   university: University;
@@ -24,13 +27,16 @@ export class Admission {
   universityId: number;
 
   @Column()
-  facultyName: string; // คณะ
+  facultyName: string;
 
   @Column()
-  majorName: string; // สาขา
+  majorName: string;
 
-  @Column({ unique: true, nullable: true })
-  programCode: string; // รหัสหลักสูตรจาก ทปอ.
+  @Column({ nullable: true })
+  programCode: string;
+
+  @Column({ type: 'int', default: 2568 })
+  year: number;
 
   @Column({
     type: 'enum',
@@ -39,9 +45,6 @@ export class Admission {
   })
   programType: ProgramType;
 
-  /* jsonb ทำให้เราสามารถเพิ่มวิชาใหม่ๆได้
-  โดยไม่ต้องแก้ Schema ฐานข้อมูล และ PostgreSQL
-  ยังสามารถ Query ข้อมูลภายใน JSON ได้เร็ว */
   @Column({ type: 'jsonb' })
   scoreWeights: Record<string, number>;
 
@@ -51,8 +54,11 @@ export class Admission {
   @Column({ nullable: true })
   sourceUrl: string;
 
-  @Column({ type: 'jsonb', nullable: true }) // ใช้ jsonb จะค้นหาข้อมูลข้างในได้เก่งมาก
+  @Column({ type: 'jsonb', nullable: true })
   requirements: any;
+
+  @OneToMany(() => AdmissionStat, (stat) => stat.admission)
+  stats: AdmissionStat[];
 
   @CreateDateColumn()
   createdAt: Date;

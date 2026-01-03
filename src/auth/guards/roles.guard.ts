@@ -3,7 +3,7 @@ import { Reflector } from '@nestjs/core';
 import { UserRole } from '../../enums/role.enum';
 import { ROLES_KEY } from '../decorators/roles.decorator';
 import { Request } from 'express';
-import { User } from 'src/users/entities/user.entity';
+import { User } from 'src/entities/user.entity';
 
 interface RequestWithUser extends Request {
   user?: User;
@@ -14,7 +14,7 @@ export class RolesGuard implements CanActivate {
   constructor(private reflector: Reflector) { }
 
   canActivate(context: ExecutionContext): boolean {
-    // 1. ดึงสิทธิ์ที่ต้องการจาก Decorator
+    // ดึงสิทธิ์ที่ต้องการจาก Decorator
     const requiredRoles = this.reflector.getAllAndOverride<UserRole[]>(
       ROLES_KEY,
       [context.getHandler(), context.getClass()],
@@ -24,7 +24,7 @@ export class RolesGuard implements CanActivate {
       return true;
     }
 
-    // 2. ดึงข้อมูล User
+    // ดึงข้อมูล User
     const request = context.switchToHttp().getRequest<RequestWithUser>();
     const user = request.user;
 
@@ -37,7 +37,7 @@ export class RolesGuard implements CanActivate {
       return true;
     }
 
-    // 3. เช็คว่าสิทธิ์ของ User ตรงกับที่ต้องการไหม
+    // เช็คrole
     return requiredRoles.some((role) => user.role === role);
   }
 }

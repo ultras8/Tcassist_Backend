@@ -33,10 +33,19 @@ export class AuthService {
       );
     }
 
-    const payload = { sub: user.id, email: user.email, role: user.role };
+    const payload = {
+      id: user.id,
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+    };
 
     return {
       access_token: await this.jwtService.signAsync(payload),
+      fName: user.fName,
+      lName: user.lName,
+      email: user.email,
+      role: user.role,
     };
   }
 }

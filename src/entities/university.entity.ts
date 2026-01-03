@@ -13,13 +13,13 @@ export class University {
   id: number;
 
   @Column({ unique: true })
-  fullName: string; // มหาวิทยาลัยจุฬาลงกรณ์มหาวิทยาลัย
+  fullName: string;
 
   @Column({ unique: true, nullable: true })
-  abbr: string; // CU
+  abbr: string;
 
   @Column({ nullable: true })
-  logoUrl: string; // สำหรับเก็บลิงก์โลโก้
+  logoUrl: string;
 
   // ความสัมพันธ์: 1 มหาวิทยาลัย มีได้หลายเกณฑ์การรับ
   @OneToMany(() => Admission, (admission) => admission.university)

@@ -1,5 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn, DeleteDateColumn } from 'typeorm';
-import { UserRole } from '../../enums/role.enum';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  DeleteDateColumn,
+  OneToMany,
+} from 'typeorm';
+import { UserRole } from '../enums/role.enum';
+import { Score } from 'src/entities/score.entity';
 
 @Entity() // บอกว่าเป็นตารางในฐานข้อมูล
 export class User {
@@ -39,4 +46,7 @@ export class User {
 
   @DeleteDateColumn() // เก็บวันที่ลบไว้ ถ้ามีค่าแปลว่าถูกลบ
   deletedAt: Date;
+
+  @OneToMany(() => Score, (score) => score.user)
+  scores: Score[];
 }
