@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { UserRole } from '../enums/role.enum';
 import { Score } from 'src/entities/score.entity';
+import { Report } from './report.entity';
 
 @Entity() // บอกว่าเป็นตารางในฐานข้อมูล
 export class User {
@@ -49,4 +50,7 @@ export class User {
 
   @OneToMany(() => Score, (score) => score.user)
   scores: Score[];
+
+  @OneToMany(() => Report, (report) => report.sender)
+  reports: Report[];
 }

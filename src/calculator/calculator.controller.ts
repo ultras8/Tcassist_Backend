@@ -60,7 +60,7 @@ export class CalculatorController {
     return await this.calculatorService.searchPrograms(query, year);
   }
 
-  // --- ส่วนที่ต้องใช้การ Login (Guards) ---
+  // ส่วนที่ต้องใช้การ Login (Guards)
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.USER)

@@ -33,7 +33,6 @@ export class ScoresService {
       });
     }
 
-    // บันทึกลงฐานข้อมูลก่อน
     const savedScore = await this.scoreRepository.save(score);
 
     // ล้าง Cache (เวอร์ชัน v5+ ใช้ clear() แทน reset())

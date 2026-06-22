@@ -114,7 +114,7 @@ export class CalculatorService {
       return fuzzyKey ? normalizedUserScores[fuzzyKey] : 0;
     };
 
-    // --- เริ่มการคำนวณคะแนนรวม ---
+    // เริ่มการคำนวณคะแนนรวม
     const subjects = Object.entries(weights);
 
     // ป้องกันน้ำหนักรวมเกิน 100 (เช่น 100 + 100)
@@ -159,7 +159,7 @@ export class CalculatorService {
       };
     }
 
-    // --- สร้างคำแนะนำ ---
+    // สร้างคำแนะนำ
     let recommendation = '';
     const gap = lastYearMinScore - totalScore;
 
@@ -206,7 +206,7 @@ export class CalculatorService {
     };
   }
 
-  // --- Dropdown & Search Methods (Cleaned up) ---
+  // Dropdown & Search Methods (Cleaned up) 
   async getAllUniversities() {
     return await this.admissionRepository
       .createQueryBuilder('admission')
@@ -349,7 +349,7 @@ export class CalculatorService {
     return cleanName.replace(/[()]/g, '').trim();
   }
 
-  // --- Calculation Execution Methods ---
+  // Calculation Execution Methods
   async calculateAdmissionScore(
     userId: string,
     programCode: string,

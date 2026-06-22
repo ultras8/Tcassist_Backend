@@ -6,11 +6,13 @@ import {
   Request,
   Get,
   Param,
+  Req,
 } from '@nestjs/common';
 import { ScoresService } from './scores.service';
 import { CreateScoreDto } from './dto/create-score.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { User } from '../entities/user.entity';
+import { ApiOperation } from '@nestjs/swagger';
 
 @Controller('scores')
 export class ScoresController {

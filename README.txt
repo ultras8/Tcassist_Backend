@@ -51,7 +51,7 @@ SELECT
     c."programCode", 
     c."majorName", 
     COUNT(s.id) as total_years_stat
-FROM "admission_criteria" c  -- 🎯 ถ้ายัง Error ให้ลองเปลี่ยนเป็น "admissions" ดูนะคะ
+FROM "admission_criteria" c  
 INNER JOIN "admission_stats" s ON c."programCode" = s."programCode"
 GROUP BY c."programCode", c."majorName"
 HAVING COUNT(s.id) >= 1

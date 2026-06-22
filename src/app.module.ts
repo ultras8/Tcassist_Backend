@@ -8,6 +8,11 @@ import { University } from './entities/university.entity';
 import { CalculatorModule } from './calculator/calculator.module';
 import { ScoresModule } from './scores/scores.module';
 import { CacheModule } from '@nestjs/cache-manager';
+import { ExamsModule } from './exams/exams.module';
+import { ExamQuestion } from './entities/exam-question.entity';
+import { ExamLibrary } from './entities/exam-library.entity';
+import { ReportsModule } from './reports/reports.module';
+import { Report } from './entities/report.entity';
 
 @Module({
   imports: [
@@ -27,13 +32,22 @@ import { CacheModule } from '@nestjs/cache-manager';
         username: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_NAME'),
-        entities: [__dirname + '/**/*.entity{.ts,.js}', University, Admission],
+        entities: [
+          __dirname + '/**/*.entity{.ts,.js}',
+          University,
+          Admission,
+          ExamQuestion,
+          ExamLibrary,
+          Report,
+        ],
         synchronize: true,
       }),
     }),
     AuthModule,
     CalculatorModule,
     ScoresModule,
+    ExamsModule,
+    ReportsModule,
   ],
 })
 export class AppModule { }
